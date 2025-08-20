@@ -54,3 +54,22 @@
 }
 
 h1{color:pink;}
+
+.lista-pacientes{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comp_paciente{
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.page_lista-pacientes{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
