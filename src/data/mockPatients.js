@@ -63,7 +63,7 @@ export const pacientesMock = [
     dataNascimento: '1995-12-03',
     celular: '11954321098',
     endereco: {
-      cidade: 'São Bernardo do Campo',
+      cidade: 'São Paulo',
       estado: 'SP',
       rua: 'Praça Central, 321'
     },

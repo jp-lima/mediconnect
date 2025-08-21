@@ -105,10 +105,15 @@ function Patientform() {
             <input type="file" />
           </div>
 
+          <section className='form_principal'>
+
             <div>
                 <label htmlFor="text">Nome:</label>
                 <input type="text" placeholder="Insira seu nome aqui" />
 
+            </div>
+
+            <div>
                 <label htmlFor="text">Nome social:</label>
                 <input type="text" placeholder="" />
             </div>
@@ -116,7 +121,9 @@ function Patientform() {
             <div>
                 <label htmlFor="text" >Data de nascimento:</label>
                 <input type= 'text' placeholder="Insira sua data de nascimento aqui" onChange={ (e) => e.target.value = formatData(e.target.value)}/>
+            </div>
 
+            <div>
                 <select name="" id="">
                 <option value="">Selecione seu gênero</option>
                 <option value="masculino"> Masculino</option>
@@ -128,26 +135,39 @@ function Patientform() {
         
 
         <div>
+            <label>Escolher outro document:</label>
             <select name="documentos" id="">
                 <option value="">Outros tipos de documento</option>
                 <option value="cnh">CNH</option>
                 <option value="passaporte">Passaporte</option>
 
-            </select>
+             </select>
+          </div>
+
+          <div>
 
             <label htmlFor="text">Número do documento</label>
             <input type="text" placeholder="Insira seu número de documento" />
-      </div>
-
+          </div>
+      
+      <div>
         <label htmlFor="text">CPF:</label>
         <input type="text" placeholder="Insira seu CPF" onChange={(e) => e.target.value = formatCPF(e.target.value)} />
+      </div>
+
+      <div>
 
         <label htmlFor="text">Profissão:</label>
         <input type="text" placeholder="Insira sua profissão" />
-      
-        <div>
+      </div>
+  
+      <div>
             <label htmlFor='text'>Nome da Mãe</label>
             <input type="text" placeholder="Nome da mãe"/>
+
+      </div>
+
+          '<div>
 
             <label htmlFor="text">Profissão da mãe</label>
             <input type="text" placeholder="Insira aqui" />
@@ -157,12 +177,15 @@ function Patientform() {
         <div>
             <label htmlFor="text">Nome do Pai</label>
             <input type="text" placeholder="Insira nome do pai" />
-            
+
+        </div>
+
+          <div>  
 
             <label htmlFor="text">Profissão do Pai</label>
             <input type="text" placeholder="Insira profissão do pai" />
 
-        </div>
+          </div>
 
 
 
@@ -170,6 +193,9 @@ function Patientform() {
             <label htmlFor="text"> Nome do responsavel</label>
             <input type="text" placeholder="Insira nome do responsável" />
 
+        </div>
+
+        <div>
             <label htmlFor="text">CPF do responsável</label>
             <input type="text" placeholder="CPF do responsavel" />
         </div>
@@ -178,75 +204,101 @@ function Patientform() {
             <label htmlFor="text">Nome do esposo(a)</label>
             <input type="text" placeholder="Opcional"/>
 
-            <label htmlFor="radio">RN na guia de convênio </label>
-            <input type="radio" value="true" />
+         </div>
+
+        <div>
 
             <label htmlFor="text">Identificador de outro sistema</label>
             <input type="text" />
 
         </div>
 
-      <details>
-        <summary>Endereço</summary>
+      </section>
+
         <div>
 
-          <label htmlFor="text">CEP</label>
-          <input type="text" placeholder="Insira o CEP" value={cep} onChange={(e) => validarCEP(e.target.value)}/>
+            <label htmlFor="radio">RN na guia de convênio </label>
+            <input type="radio" value="true" />
+        </div>
 
+      <section className='end-ctt-obs'>
+        
+        <details>
+          <summary>Endereço</summary>
+          <div className='detalhes_amais'>
+
+          <div>
+            <label htmlFor="text">CEP</label>
+            <input type="text" placeholder="Insira o CEP" value={cep} onChange={(e) => validarCEP(e.target.value)}/>
+          </div>
+
+
+          <div>    
+            <label htmlFor="text">Cidade</label>
+            <input type="text" placeholder="Insira a cidade" value={localizacao["cidade"]} readOnly/>
+          </div>
+
+          <div>
+            <label htmlFor="text">Estado</label>
+            <input type="text" placeholder="Insira o estado" value={localizacao["estado"]} readOnly/>
+          </div>
             
-          <label htmlFor="text">Cidade</label>
-          <input type="text" placeholder="Insira a cidade" value={localizacao["cidade"]} readOnly/>
+          <div>
+            <label htmlFor="text">Bairro</label>
+            <input type="text" placeholder="Insira o bairro" value={localizacao["bairro"]} readOnly/>
+          </div>
 
-          <label htmlFor="text">Estado</label>
-          <input type="text" placeholder="Insira o estado" value={localizacao["estado"]} readOnly/>
+          <div>
+            <label htmlFor="text">Rua</label>
+            <input type="text" placeholder="Insira sua rua" value={localizacao["rua"]} readOnly/>
+          </div>
+          <div>
+            <label htmlFor="text">Número</label>
+            <input type="text" placeholder="Insira o número" />
+          </div>
+          <div>
+            <label htmlFor="text">Complemento</label>
+            <input type="text" placeholder="Insira o complemento" />
+          </div>
+          </div>
+        </details>
+        
+        <details>
+          <summary>Contato</summary>
+          <div className='detalhes_amais'>
 
-          
-          <label htmlFor="text">Bairro</label>
-          <input type="text" placeholder="Insira o bairro" value={localizacao["bairro"]} readOnly/>
+            <div>
+              <label htmlFor="text">E-mail</label>
+              <input type="email" placeholder="exemplo12@dominio.com" />
+            </div>
 
-
-
-          <label htmlFor="text">Rua</label>
-          <input type="text" placeholder="Insira sua rua" value={localizacao["rua"]} readOnly/>
-
-          <label htmlFor="text">Número</label>
-          <input type="text" placeholder="Insira o número" />
-
-          <label htmlFor="text">Complemento</label>
-          <input type="text" placeholder="Insira o complemento" />
-
-        </div>
-      </details>
-      
-      <details>
-        <summary>Contato</summary>
-        <div>
-          <label htmlFor="text">E-mail</label>
-          <input type="email" placeholder="exemplo12@dominio.com" />
-
-          <label htmlFor="text">Telefone</label>
-          <input type="text" placeholder="(XX) X XXXX-XXXX" onChange ={(e) => e.target.value = formatarTel(e.target.value)}/>
-
-          <label htmlFor="text">Telefone 2</label>
-          <input type="text" placeholder="(XX) X XXXX-XXXX" onChange={(e) => e.target.value = formatarTel(e.target.value)} />
-
-          <label htmlFor="text">Telefone 3</label>
-          <input type="text" placeholder="(XX) X XXXX-XXXX" onChange={(e) => e.target.value = formatarTel(e.target.value)} />
-
-          
-        </div>
-      </details>
-
-
-      <details>
-        <summary>Informações Adicionais</summary>
-
-        <label htmlFor='observacoes'>Observações como alergia,restrições, etc</label>
-        <textarea  cols="30" rows="10" placeholder="Observações"></textarea>
+            <div>
+              <label htmlFor="text">Telefone</label>
+              <input type="text" placeholder="(XX) X XXXX-XXXX" onChange ={(e) => e.target.value = formatarTel(e.target.value)}/>
+            </div>
+            <div>
+              <label htmlFor="text">Telefone 2</label>
+              <input type="text" placeholder="(XX) X XXXX-XXXX" onChange={(e) => e.target.value = formatarTel(e.target.value)} />
+            </div>
+            <div>
+              <label htmlFor="text">Telefone 3</label>
+              <input type="text" placeholder="(XX) X XXXX-XXXX" onChange={(e) => e.target.value = formatarTel(e.target.value)} />
+            </div>
+            
+          </div>
+        </details>
 
 
-      </details>
-      
+        <details>
+          <summary>Informações Adicionais</summary>
+
+          <label htmlFor='observacoes'>Observações como alergia,restrições, etc</label>
+          <textarea  cols="30" rows="10" placeholder="Observações"></textarea>
+
+
+        </details>
+    </section>  
+
       
       
       

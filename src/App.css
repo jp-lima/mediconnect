@@ -42,34 +42,212 @@
 }
 
 
-.form_paciente{
-  display: flex;
-  flex-direction: column;
+.comp_paciente{
+  display: grid;
+  grid-template-columns: 80px 2fr 1.5fr 1fr 1fr 1fr 1fr; 
+  /* aumentei a 1ª coluna p/ caber a foto */
   gap: 1rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #ddd;
 
 }
 
-.form_paciente div{
-  margin-bottom: 2rem;
-}
-
-h1{color:pink;}
-
-.lista-pacientes{
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
+/*
 .comp_paciente{
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   padding: 1rem;
-  border-bottom: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+  height: 90px;
+  justify-content: space-between;
+  
+}
+*/
+.comp_paciente p {
+  margin-left: 30px ;
+  font-size: 1.2rem;
+  
+}
+.vip {
+  display: inline-flex;
+  align-items: center;      /* centraliza verticalmente */
+  justify-content: center;  /* centraliza horizontalmente */
+  background-color: #ffeb3b;
+  padding: 0 1rem;          /* espaçamento lateral */
+  border-radius: 9999px;    /* arredondamento total */
+  font-weight: bold;
+  height: 30px;
+  line-height: 1;           /* evita esticar o texto */
+  font-size: 14px;
+  color: #333;              /* melhora contraste */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* leve sombra */
+  text-align: center;
+}
+
+/*
+.comp_paciente div{
+  margin-left: 20px;
+}
+*/
+.comp_paciente img{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+
+
+  object-fit: cover; /* evita distorção */
+
+
+}
+
+
+.titulo_tabela{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #39abdb;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  justify-content: space-between;
+  font-weight: bold;
 }
 
 .page_lista-pacientes{
+  padding: 1rem;
+  margin-top:1rem;
+}
+
+.nome_vip_convenio {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+}
+.vip_convenio {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lista-pacientes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* espaço entre linhas */
+}
+
+.form_paciente {
+  padding: 2em;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/*
+.form_paciente details{
+  background-color: #71c6eb;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.form_paciente h2{
+  font-size: 40px;
+  justify-content: flex-start;
+  margin-bottom: 2.5rem;
+}
+
+.form_paciente label{
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.form_paciente input{
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 30%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.form_paciente summary{
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}*/
+
+.form_principal, .detalhes_amais {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* duas colunas */
+  gap: 1rem 2rem;
+  max-width: 900px;
+  margin: 0 auto; /* centraliza */
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.full {
+  grid-column: span 2;
+}
+
+.end-ctt-obs {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  justify-content: space-around;
+}
+summary {
+  font-size: 1.2rem;     /* tamanho maior */
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  list-style: none;      /* remove marcador */
+  background-color: #f0f8ff;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+/* remove a seta padrão do summary */
+summary::-webkit-details-marker {
+  display: none;
+}
+summary::marker {
+  display: none;
+}
+details[open] {
+  background-color: #f0f8ff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+details[open] summary {
+  background-color: #f0f8ff;
+  
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: none;
 }

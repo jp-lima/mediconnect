@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     children: [
         {
             path: '/',
-            element: <ListaPacientes />
+            element: <ListaPacientes/>
         },
         {
             path:'formulario',
