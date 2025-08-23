@@ -1,24 +1,31 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 
 import { pacientesMock } from '../data/mockPatients.js';
+import {supabase} from '../supabaseClient.js'
 
 import Paciente from '../components/Paciente';
-
+//import fetchPacientes from '../data/ImportPacientes.js'
 
 const ListaPacientes = () => {
 
   const [pacientesEncontrados, setPacientesEncontrados] = useState(pacientesMock);
 
+  const [pacientes, setPacientes] = useState([])
 
-  const Nn = (valor) => {
-    console.log(!isNaN(valor))
-  }
+  useEffect(() => {
+    const fetchPacientes = async () => {
+    const { data, error } = await supabase.from("pacientes").select("*");
+    console.log("data:", data);
+    console.log("error:", error);
+    setPacientes(data)
+      };
 
+    fetchPacientes();
+  }, []);
   
     const Pesquisar = ( valor ) => {
-
       valor = valor.toLowerCase()
       let lista = []
 
@@ -27,7 +34,6 @@ const ListaPacientes = () => {
       }else{
         setPacientesEncontrados([])
       }
-      
       for(let i =0; pacientesMock.length > i;i++ ){
         
         let paciente = pacientesMock[i]
@@ -44,15 +50,12 @@ const ListaPacientes = () => {
           setPacientesEncontrados(lista)
  
         }
-
-      
-    
-    
     }
     }
 
   return (
   <div className='page_lista-pacientes'>
+
 
     <button>
       <Link  to='/formulario'>Novo paciente</Link>
@@ -74,8 +77,8 @@ const ListaPacientes = () => {
     </div>
 
     <div className='lista-pacientes'>
-      {pacientesEncontrados.map(paciente => (
-        <Paciente key={paciente.id} paciente={paciente} className="pacie"/>
+      {pacientes.map(paciente => (
+        <Paciente key={paciente.id} paciente={paciente} className="paciente"/>
       ))}
     </div>
 

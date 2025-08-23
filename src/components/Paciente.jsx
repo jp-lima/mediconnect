@@ -22,8 +22,8 @@ const Paciente = ( { paciente }) => {
 
 
         <p>{paciente.celular}</p>
-        <p>{paciente.endereco.cidade}</p>
-        <p>{paciente.endereco.estado}</p>
+        <p>{paciente.cidade}</p>
+        <p>{paciente.estado}</p>
         <p>{new Date(paciente.ultimaConsulta).toLocaleString()}</p>
         <p>{new Date(paciente.proximaConsulta).toLocaleString()}</p>
         
