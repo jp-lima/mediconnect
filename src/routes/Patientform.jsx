@@ -2,10 +2,35 @@ import { useState } from 'react';
 import React from "react";
 import { supabase } from '../supabaseClient.js'
 
+import {Link} from 'react-router-dom'
+
+//convenio, conectar label no input, VIP, só aparecer pais se data der alguém de menor, botão ações, clicar no paciente e aparecer todos os dados (apenas visualizar)
+
+// Feito:  melhorar RN no convenio,  formatar cpf pais,
 
 
 function Patientform() {
 
+  function getAge(dataNascimento){
+  const [dia, mes, ano] = dataNascimento.split('/').map(Number);
+
+  const hoje = new Date();
+  const nascimento = new Date(ano, mes - 1, dia); // mês começa em 0
+
+  let idade = hoje.getFullYear() - nascimento.getFullYear();
+
+  // Ajusta caso o aniversário ainda não tenha acontecido esse ano
+  const mesAtual = hoje.getMonth();
+  const diaAtual = hoje.getDate();
+  if (mesAtual < mes - 1 || (mesAtual === mes - 1 && diaAtual < dia)) {
+    idade--;
+  }
+
+  return idade
+
+  }
+  
+  const [responsaveisVisiveis, setVisibilidade] = useState(false)
 
   const [nome, setNome] = useState('')
   const [nomeSocial, setNomeSocial] = useState('')
@@ -50,13 +75,11 @@ function Patientform() {
     cidade:'',
     rua:''
   })
-  //bairro
-  //estado
-  //cidade
-  //rua ou logradouro
-
+ 
 
   const handleSubmit = async (e) => {
+
+
     e.preventDefault()
 
     const {data, error} = await supabase
@@ -102,7 +125,7 @@ function Patientform() {
     } else {
       console.log("Paciente inserido:", data);
       alert("Paciente cadastrado com sucesso!");
-      // limpar campos
+      
      
     }
 
@@ -151,8 +174,18 @@ function Patientform() {
   
   const formatData = (valor) => {
     if(valor.length === 10){
-      let numerosData = valor.replace(/\D/g, '')
-      setDataNasc(numerosData)
+
+      let idade = getAge(valor)
+
+
+
+      // Os campos sobre CPF do responsavel e Nome do responsavel só aparecem se o usuário for de menor
+      if(idade < 18){
+        console.log('de menor')
+        setVisibilidade(true)
+      }
+      
+      setDataNasc(valor)
      
     }
     return valor
@@ -160,15 +193,22 @@ function Patientform() {
     .replace(/\D/g, '')
     
     .replace(/(\d{2})(\d{2})/, '$1/$2/')
-    //.replace(/(\d{2})/, '/$1' )
+  
     .slice(0,11)
   }
   
   
-  const formatCPF = (valor) => {
+  const formatCPF = (valor, id) => {
     if(valor.length === 14){
+
+      
       let numerosCPF = valor.replace(/\D/g, '')
-      setCpf(numerosCPF)
+      
+      if(id === 'cpf' ){setCpf(numerosCPF)}
+
+      if(id === 'cpfresp'){setCpfResp(numerosCPF)}
+
+      console.log(id, numerosCPF)
      
     }
     
@@ -194,7 +234,6 @@ function Patientform() {
       setTelefone3(numerosTel3)
     }
 
-    console.log(id)
     return valor
     .replace(/\D/g, '')
     .replace(/(\d{2})(\d)/, '($1) $2 ')
@@ -215,6 +254,10 @@ function Patientform() {
   
   return (
     <div >
+
+      <button>
+        <Link to='/'> voltar sem salvar </Link>
+      </button>
       
 
       <form className="form_paciente" action="" onSubmit= { (e) => handleSubmit(e)}>
@@ -228,24 +271,26 @@ function Patientform() {
           <section className='form_principal'>
 
             <div>
-                <label htmlFor="text">Nome:</label>
-                <input type="text" placeholder="Insira seu nome aqui" onChange={(e) => setNome(e.target.value)}/>
+                <label htmlFor="input_nome">Nome:</label>
+                <input id="input_nome" type="text" placeholder="Insira seu nome aqui" onChange={(e) => setNome(e.target.value)}/>
 
             </div>
 
             <div>
-                <label htmlFor="text">Nome social:</label>
-                <input type="text" placeholder="" onChange={(e) => setNomeSocial(e.target.value)}/>
+                <label htmlFor="input_nomesocial">Nome social:</label>
+                <input id="input_nomesocial" type="text" placeholder="" onChange={(e) => setNomeSocial(e.target.value)}/>
             </div>
 
             <div>
-                <label htmlFor="text" >Data de nascimento:</label>
-                <input type= 'text' placeholder="Insira sua data de nascimento aqui" onChange={ (e) => e.target.value = formatData(e.target.value)}/>
+                <label htmlFor="input_data" >Data de nascimento:</label>
+                <input id="input_data" type= 'text' placeholder="Insira sua data de nascimento aqui" onChange={ (e) => e.target.value = formatData(e.target.value) }/>
             </div>
+
+            {/*(e) => e.target.value = formatData(e.target.value)*/}
 
             <div>
               <label htmlFor="seletor_genero">Qual gênero você se identifica:</label>
-                <select name="seletor_genero" id="" onChange={(e) => setGenero(e.target.value)}>
+                <select id="seletor_genero"  onChange={(e) => setGenero(e.target.value)}>
                 <option value="">Selecione seu gênero</option>
                 <option value="masculino"> Masculino</option>
                 <option value="feminino"> Feminino</option>
@@ -267,37 +312,37 @@ function Patientform() {
 
           <div>
 
-            <label htmlFor="text">Número do documento</label>
-            <input type="text" placeholder="Insira seu número de documento" onChange={(e) => setNumDoc(e.target.value)}/>
+            <label htmlFor="input_numerodocumento">Número do documento</label>
+            <input id="input_numerodocumento" type="text" placeholder="Insira seu número de documento" onChange={(e) => setNumDoc(e.target.value)}/>
           </div>
       
       <div>
-        <label htmlFor="text">CPF:</label>
-        <input type="text" placeholder="Insira seu CPF" onChange={(e) => e.target.value = formatCPF(e.target.value)} />
+        <label htmlFor="input_cpf">CPF:</label>
+        <input id="input_cpf" type="text" placeholder="Insira seu CPF" onChange={(e) => e.target.value = formatCPF(e.target.value, e.target.id)} />
       </div>
 
       <div>
 
-        <label htmlFor="text">Profissão:</label>
-        <input type="text" placeholder="Insira sua profissão" onChange={(e) => setProfissao(e.target.value)}/>
+        <label htmlFor="input_profissao">Profissão:</label>
+        <input id="input_profissao" type="text" placeholder="Insira sua profissão" onChange={(e) => setProfissao(e.target.value)}/>
       </div>
 
       <div>
         <label htmlFor="nacionalidade">Nacionalidade</label>
-        <input type="text" name="nacionalidade" onChange={(e) => setNacionalidade(e.target.value)}/>
+        <input  type="text" id="nacionalidade" onChange={(e) => setNacionalidade(e.target.value)}/>
 
       </div>
   
       <div>
-            <label htmlFor='text'>Nome da Mãe</label>
-            <input type="text" placeholder="Nome da mãe" onChange={(e) => setNomeMae(e.target.value)}/>
+            <label htmlFor='input_nomemae'>Nome da Mãe</label>
+            <input  id="input_nomemae" type="text" placeholder="Nome da mãe" onChange={(e) => setNomeMae(e.target.value)}/>
 
       </div>
 
           '<div>
 
-            <label htmlFor="text">Profissão da mãe</label>
-            <input type="text" placeholder="Insira aqui" onChange={(e) => setProfissaoMae(e.target.value)}/>
+            <label htmlFor="input_profissao_mae">Profissão da mãe</label>
+            <input id="input_profissa_omae" type="text" placeholder="Insira aqui" onChange={(e) => setProfissaoMae(e.target.value)}/>
 
         </div>
 
@@ -315,7 +360,9 @@ function Patientform() {
           </div>
 
 
-
+        
+        {responsaveisVisiveis&&
+        <div> 
         <div>
             <label htmlFor="text"> Nome do responsavel</label>
             <input type="text" placeholder="Insira nome do responsável"  onChange={(e) => setNomeResp(e.target.value)} />
@@ -324,8 +371,11 @@ function Patientform() {
 
         <div>
             <label htmlFor="text">CPF do responsável</label>
-            <input type="text" placeholder="CPF do responsavel" onChange= {(e) => setCpfResp(e.target.value)} />
+            <input id="cpfresp" type="text" placeholder="CPF do responsavel" onChange= {(e) => e.target.value = formatCPF(e.target.value, e.target.id)} />
         </div>
+        </div>}
+        
+        
 
         <div>
             <label htmlFor="text">Nome do esposo(a)</label>
@@ -345,7 +395,7 @@ function Patientform() {
         <div>
 
             <label htmlFor="radio">RN na guia de convênio </label>
-            <input type="radio" value="true" onChange={(e) => setRnGuiaConvenio(e.target.value)} />
+            <input type="checkbox" value="true" onChange={(e) => setRnGuiaConvenio(e.target.value)} />
         </div>
 
       <section className='end-ctt-obs'>
@@ -362,22 +412,25 @@ function Patientform() {
 
           <div>    
             <label htmlFor="text">Cidade</label>
-            <input type="text" placeholder="Insira a cidade" value={localizacao["cidade"]}  readOnly/>
+            <input type="text" placeholder="Insira a cidade" onChange= {(e) => { setCidade(e.target.value)}} />
           </div>
 
           <div>
             <label htmlFor="text">Estado</label>
-            <input type="text" placeholder="Insira o estado" value={localizacao["estado"]} readOnly/>
+            <input type="text" placeholder="Insira o estado"
+             onChange= {(e) => { setEstado(e.target.value)} }/>
           </div>
             
           <div>
             <label htmlFor="text">Bairro</label>
-            <input type="text" placeholder="Insira o bairro" value={localizacao["bairro"]} readOnly/>
+            <input type="text" placeholder="Insira o bairro" 
+            onChange= {(e) => setBairro(e.target.value)}/>
           </div>
 
           <div>
             <label htmlFor="text">Rua</label>
-            <input type="text" placeholder="Insira sua rua" value={localizacao["rua"]} readOnly/>
+            <input type="text" placeholder="Insira sua rua" 
+            onChange= {(e) =>  setRua(e.target.value)} />
           </div>
           <div>
             <label htmlFor="text">Número</label>

@@ -26,6 +26,8 @@ const Paciente = ( { paciente }) => {
         <p>{paciente.estado}</p>
         <p>{new Date(paciente.ultimaConsulta).toLocaleString()}</p>
         <p>{new Date(paciente.proximaConsulta).toLocaleString()}</p>
+
+        <select name="" id=""> : </select>
         
         
     </div>
