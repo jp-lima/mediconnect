@@ -16,7 +16,10 @@ const ListaPacientes = () => {
 
   useEffect(() => {
     const fetchPacientes = async () => {
-    const { data, error } = await supabase.from("pacientes").select("*");
+    const { data, error } = await supabase
+    .from("pacientes")
+    .select("*");
+    
     console.log("data:", data);
     console.log("error:", error);
     setPacientes(data)
