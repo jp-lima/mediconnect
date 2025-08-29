@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 
-import { pacientesMock } from '../data/mockPatients.js';
+import { pacienteMock } from '../data/mockPatients.js';
 import {supabase} from '../supabaseClient.js'
 
 import Paciente from '../components/Paciente';
@@ -10,9 +10,11 @@ import Paciente from '../components/Paciente';
 
 const ListaPacientes = () => {
 
-  const [pacientesEncontrados, setPacientesEncontrados] = useState(pacientesMock);
+  
 
   const [pacientes, setPacientes] = useState([])
+
+  const [pacientesEncontrados, setPacientesEncontrados] = useState(pacientes);
 
   useEffect(() => {
     const fetchPacientes = async () => {
@@ -33,19 +35,18 @@ const ListaPacientes = () => {
       let lista = []
 
       if(valor.length === 0){
-      setPacientesEncontrados(pacientesMock)  
+      setPacientesEncontrados(pacientes)  
       }else{
         setPacientesEncontrados([])
       }
-      for(let i =0; pacientesMock.length > i;i++ ){
+      for(let i =0; pacientes.length > i;i++ ){
         
-        let paciente = pacientesMock[i]
+        let paciente = pacientes[i]
         
         let numero = paciente.celular
         let cpf = paciente.cpf
         let nome = paciente.nome.toLowerCase()
 
-        // Se for número, retorna true
         if(numero.includes(valor) || cpf.includes(valor) || nome.includes(valor)){
           console.log(paciente)
           lista = [...lista,paciente]

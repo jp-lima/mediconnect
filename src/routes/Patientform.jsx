@@ -4,45 +4,45 @@ import { supabase } from '../supabaseClient.js'
 
 
 
-function Patientform() {
+function Patientform({pacienteDados}) {
 
 
-  const [nome, setNome] = useState('')
-  const [nomeSocial, setNomeSocial] = useState('')
-  const [dataNascimento, setDataNasc] = useState('')
-  const [genero, setGenero] = useState('')
-  const [tipoDoc, setTipoDoc] = useState('')
-  const [numDoc, setNumDoc] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [profissao, setProfissao] = useState('')
-  const [nomeMae, setNomeMae] = useState('')
-  const [profissaoMae, setProfissaoMae] = useState('')
-  const [nomePai, setNomePai] = useState('')
-  const [profissaoPai, setProfissaoPai] = useState('')
-  const [nomeResp, setNomeResp] = useState('')
-  const [cpfResp, setCpfResp] = useState('')
-  const [nomeEsposo, setNomeEsposo] = useState('')
-  const [idOutroSistema, setIdOutroSistema] = useState('')
-  const [rnGuiaConvenio, setRnGuiaConvenio] = useState(false)
-  const [nacionalidade, setNacionalidade] = useState('')
+  const [nome, setNome] = useState(pacienteDados.nome)
+  const [nomeSocial, setNomeSocial] = useState(pacienteDados.nomeSocial)
+  const [dataNascimento, setDataNasc] = useState(pacienteDados.dataNascimento)
+  const [genero, setGenero] = useState(pacienteDados.genero)
+  const [tipoDoc, setTipoDoc] = useState(pacienteDados.tipoDoc)
+  const [numDoc, setNumDoc] = useState(pacienteDados.numDoc)
+  const [cpf, setCpf] = useState(pacienteDados.cpf)
+  const [profissao, setProfissao] = useState(pacienteDados.profissao)
+  const [nomeMae, setNomeMae] = useState(pacienteDados.nomeMae)
+  const [profissaoMae, setProfissaoMae] = useState(pacienteDados.profissaoMae)
+  const [nomePai, setNomePai] = useState(pacienteDados.nomePai)
+  const [profissaoPai, setProfissaoPai] = useState(pacienteDados.profissaoPai)
+  const [nomeResp, setNomeResp] = useState(pacienteDados.nomeResp)
+  const [cpfResp, setCpfResp] = useState(pacienteDados.cpfResp)
+  const [nomeEsposo, setNomeEsposo] = useState(pacienteDados.nomeEsposo)
+  const [idOutroSistema, setIdOutroSistema] = useState(pacienteDados.idOutroSistema)
+  const [rnGuiaConvenio, setRnGuiaConvenio] = useState(pacienteDados.rnGuiaConvenio)
+  const [nacionalidade, setNacionalidade] = useState(pacienteDados.nacionalidade)
   //const [foto, setFoto] = useState(null)
-  const [telefone1, setTelefone1] = useState('')
-  const [telefone2, setTelefone2] = useState('')
-  const [telefone3, setTelefone3] = useState('')  
+  const [telefone1, setTelefone1] = useState(pacienteDados.telefone1)
+  const [telefone2, setTelefone2] = useState(pacienteDados.telefone2)
+  const [telefone3, setTelefone3] = useState(pacienteDados.telefone3)  
 
-  const [rua, setRua] = useState('')
-  const [numero, setNumero] = useState('')
-  const [complemento, setComplemento] = useState('')
-  const [bairro, setBairro] = useState('')
-  const [cidade, setCidade] = useState('')
-  const [estado, setEstado] = useState('')
-  const [unidadeFederativa, setUnidadeFederativa] = useState('')
+  const [rua, setRua] = useState(pacienteDados.rua)
+  const [numero, setNumero] = useState(pacienteDados.numero)
+  const [complemento, setComplemento] = useState(pacienteDados.complemento)
+  const [bairro, setBairro] = useState(pacienteDados.bairro)
+  const [cidade, setCidade] = useState(pacienteDados.cidade)
+  const [estado, setEstado] = useState(pacienteDados.cidade)
+  const [unidadeFederativa, setUnidadeFederativa] = useState(pacienteDados.unidadeFederativa)
 
-  const [cep, setCep] = useState('')
+  const [cep, setCep] = useState(pacienteDados.cep)
 
-  const [observações, setObservs] = useState('')
+  const [observações, setObservs] = useState(pacienteDados.observações)
 
-  const [convenio, setConvenio] = useState('')
+  const [convenio, setConvenio] = useState(pacienteDados.convenio)
 
   const [localizacao, setLocal] = useState({
     bairro:'',
@@ -50,10 +50,7 @@ function Patientform() {
     cidade:'',
     rua:''
   })
-  //bairro
-  //estado
-  //cidade
-  //rua ou logradouro
+
 
 
   const handleSubmit = async (e) => {
@@ -64,22 +61,22 @@ function Patientform() {
     .insert([
       {
         nome,
-        nome_social: nomeSocial,
-        data_nascimento: dataNascimento,
+        nomeSocial,
+        dataNascimento,
         genero,
-        tipo_documento: tipoDoc,
-        numero_documento: numDoc,
+        tipoDoc,
+        numDoc,
         cpf,
         profissao,
-        nome_mae: nomeMae,
-        profissao_mae: profissaoMae,
-        nome_pai: nomePai,
-        profissao_pai: profissaoPai,
-        nomeResp: nomeResp,
-        cpfResp: cpfResp,
-        nome_esposo: nomeEsposo,
-        id_outro_sistema: idOutroSistema,
-        rn_guia_convenio: rnGuiaConvenio,
+        nomeMae,
+        profissaoMae,
+        nomePai,
+        profissaoPai,
+        nomeResp,
+        cpfResp,
+        nomeEsposo,
+        idOutroSistema,
+        rnGuiaConvenio,
         nacionalidade,
         telefone1,
         telefone2,
@@ -91,8 +88,8 @@ function Patientform() {
         bairro,
         cidade,
         estado,
-        unidadeFederativa: unidadeFederativa,
-        observações: observações,
+        unidadeFederativa,
+        observações,
         convenio
       }
     ]);
@@ -102,7 +99,7 @@ function Patientform() {
     } else {
       console.log("Paciente inserido:", data);
       alert("Paciente cadastrado com sucesso!");
-      // limpar campos
+     
      
     }
 
@@ -211,8 +208,6 @@ function Patientform() {
   }
   
   
-  
-  
   return (
     <div >
       
@@ -229,23 +224,23 @@ function Patientform() {
 
             <div>
                 <label htmlFor="text">Nome:</label>
-                <input type="text" placeholder="Insira seu nome aqui" onChange={(e) => setNome(e.target.value)}/>
+                <input type="text" placeholder="Insira seu nome aqui" value={nome}  onChange={(e) => setNome(e.target.value)}/>
 
             </div>
 
             <div>
                 <label htmlFor="text">Nome social:</label>
-                <input type="text" placeholder="" onChange={(e) => setNomeSocial(e.target.value)}/>
+                <input type="text" placeholder="" value={nomeSocial} onChange={(e) => setNomeSocial(e.target.value)}/>
             </div>
 
             <div>
                 <label htmlFor="text" >Data de nascimento:</label>
-                <input type= 'text' placeholder="Insira sua data de nascimento aqui" onChange={ (e) => e.target.value = formatData(e.target.value)}/>
+                <input type= 'text' placeholder="Insira sua data de nascimento aqui" value={dataNascimento} onChange={ (e) => e.target.value = formatData(e.target.value)}/>
             </div>
 
             <div>
               <label htmlFor="seletor_genero">Qual gênero você se identifica:</label>
-                <select name="seletor_genero" id="" onChange={(e) => setGenero(e.target.value)}>
+                <select name="seletor_genero" id="" value={genero} onChange={(e) => setGenero(e.target.value)}>
                 <option value="">Selecione seu gênero</option>
                 <option value="masculino"> Masculino</option>
                 <option value="feminino"> Feminino</option>
@@ -257,7 +252,7 @@ function Patientform() {
 
         <div>
             <label>Escolher outro document:</label>
-            <select name="documentos" id="" onChange={(e) => setTipoDoc(e.target.value)}>
+            <select name="documentos" id=""  onChange={(e) => setTipoDoc(e.target.value)}>
                 <option value="">Outros tipos de documento</option>
                 <option value="cnh">CNH</option>
                 <option value="passaporte">Passaporte</option>
@@ -268,29 +263,29 @@ function Patientform() {
           <div>
 
             <label htmlFor="text">Número do documento</label>
-            <input type="text" placeholder="Insira seu número de documento" onChange={(e) => setNumDoc(e.target.value)}/>
+            <input type="text" placeholder="Insira seu número de documento" value={numDoc} onChange={(e) => setNumDoc(e.target.value)}/>
           </div>
       
       <div>
         <label htmlFor="text">CPF:</label>
-        <input type="text" placeholder="Insira seu CPF" onChange={(e) => e.target.value = formatCPF(e.target.value)} />
+        <input type="text" placeholder="Insira seu CPF" value={cpf} onChange={(e) => e.target.value = formatCPF(e.target.value)} />
       </div>
 
       <div>
 
         <label htmlFor="text">Profissão:</label>
-        <input type="text" placeholder="Insira sua profissão" onChange={(e) => setProfissao(e.target.value)}/>
+        <input type="text" placeholder="Insira sua profissão" value={profissao} onChange={(e) => setProfissao(e.target.value)}/>
       </div>
 
       <div>
         <label htmlFor="nacionalidade">Nacionalidade</label>
-        <input type="text" name="nacionalidade" onChange={(e) => setNacionalidade(e.target.value)}/>
+        <input type="text" name="nacionalidade" value={nacionalidade} onChange={(e) => setNacionalidade(e.target.value)}/>
 
       </div>
   
       <div>
             <label htmlFor='text'>Nome da Mãe</label>
-            <input type="text" placeholder="Nome da mãe" onChange={(e) => setNomeMae(e.target.value)}/>
+            <input type="text" placeholder="Nome da mãe" value={nomeMae} onChange={(e) => setNomeMae(e.target.value)}/>
 
       </div>
 

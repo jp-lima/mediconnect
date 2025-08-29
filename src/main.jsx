@@ -7,8 +7,14 @@ import {createBrowserRouter, RouterProvider}  from 'react-router-dom'
 
 import Patientform from './routes/Patientform.jsx'
 import ListaPacientes from './routes/ListaPacientes.jsx'
+import  EditarPaciente from './routes/EditarPaciente.jsx'
+
+// Variavel de paciente vazio para o formulário de novo paciente
+import { pacienteMock } from './data/mockPatients.js';
 
 const router = createBrowserRouter([
+
+
   {
     path:'/',
     element: <App />,
@@ -19,8 +25,14 @@ const router = createBrowserRouter([
         },
         {
             path:'formulario',
-            element:<Patientform/>
+            element:<Patientform pacienteDados={pacienteMock} />
+        },
+        {
+          path:'editarpaciente',
+          element:<EditarPaciente/>
+
         }
+
 
 
     ]

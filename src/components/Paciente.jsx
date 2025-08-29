@@ -1,8 +1,23 @@
 import React from 'react'
- 
+import {useNavigate} from 'react-router-dom'
 
 
 const Paciente = ( { paciente }) => {
+
+  const navigate = useNavigate()
+
+    const handleChange = (valor) => {
+        if(valor === "editar"){
+          navigate(`/editarpaciente`, {state: {paciente}})
+
+
+
+          console.log(paciente)
+           
+
+        }
+
+    }
   
   
     return (
@@ -26,7 +41,13 @@ const Paciente = ( { paciente }) => {
         <p>{paciente.estado}</p>
         <p>{new Date(paciente.ultimaConsulta).toLocaleString()}</p>
         <p>{new Date(paciente.proximaConsulta).toLocaleString()}</p>
-        
+
+        <select name="" id="dropdown_opc" onChange={(e) => handleChange(e.target.value)}>
+            <option value="">:</option>
+            <option value="editar" >Editar</option>
+            <option  value="deletar" > Deletar</option>
+            <option value="marcarConsulta">Marcar Consulta</option>
+        </select>
         
     </div>
   )
