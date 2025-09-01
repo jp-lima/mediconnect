@@ -1,93 +1,101 @@
-import React from 'react'
-import { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import React from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import { pacientesMock } from '../data/mockPatients.js';
-import {supabase} from '../supabaseClient.js'
+import { supabase } from "../supabaseClient.js";
 
-import Paciente from '../components/Paciente';
+import Paciente from "../components/Paciente";
 //import fetchPacientes from '../data/ImportPacientes.js'
 
 const ListaPacientes = () => {
-
-  const [pacientesEncontrados, setPacientesEncontrados] = useState(pacientesMock);
-
-  const [pacientes, setPacientes] = useState([])
+  const [pacientes, setPacientes] = useState([]);
+  const [pacientesFiltrados, setPacientesFiltrados] = useState([]);
 
   useEffect(() => {
     const fetchPacientes = async () => {
-    const { data, error } = await supabase
-    .from("pacientes")
-    .select("*");
-    
-    console.log("data:", data);
-    console.log("error:", error);
-    setPacientes(data)
-      };
+      const { data, error } = await supabase.from("pacientes").select("*");
+
+      console.log("data:", data);
+      console.log("error:", error);
+      if (data) {
+        setPacientes(data);
+        setPacientesFiltrados(data);
+      }
+    };
 
     fetchPacientes();
   }, []);
-  
-    const Pesquisar = ( valor ) => {
-      valor = valor.toLowerCase()
-      let lista = []
 
-      if(valor.length === 0){
-      setPacientesEncontrados(pacientesMock)  
-      }else{
-        setPacientesEncontrados([])
-      }
-      for(let i =0; pacientesMock.length > i;i++ ){
-        
-        let paciente = pacientesMock[i]
-        
-        let numero = paciente.celular
-        let cpf = paciente.cpf
-        let nome = paciente.nome.toLowerCase()
+  const Pesquisar = (valor) => {
+    valor = valor.toLowerCase();
 
-        // Se for número, retorna true
-        if(numero.includes(valor) || cpf.includes(valor) || nome.includes(valor)){
-          console.log(paciente)
-          lista = [...lista,paciente]
+    if (valor.length === 0) {
+      setPacientesFiltrados(pacientes);
+    } else {
+      const filtrados = pacientes.filter((paciente) => {
+        const nome = paciente.nome?.toLowerCase() || "";
+        const telefone = paciente.telefone1 || "";
+        const cpf = paciente.cpf || "";
 
-          setPacientesEncontrados(lista)
- 
-        }
+        return (
+          nome.includes(valor) ||
+          telefone.includes(valor) ||
+          cpf.includes(valor)
+        );
+      });
+      setPacientesFiltrados(filtrados);
     }
-    }
+  };
 
   return (
-  <div className='page_lista-pacientes'>
+    <div className="page_lista-pacientes">
+      <div className="lista-header">
+        <h1>Lista de Pacientes</h1>
+        <div className="lista-actions">
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Pesquisar por nome, CPF ou telefone..."
+              className="search-input"
+              onChange={(e) => Pesquisar(e.target.value)}
+            />
+          </div>
+          <Link to="/formulario" className="btn-novo-paciente">
+            Novo Paciente
+          </Link>
+        </div>
+      </div>
 
+      <div className="titulo_tabela">
+        <div>Foto</div>
+        <div>Nome</div>
+        <div>Telefone</div>
+        <div>Cidade</div>
+        <div>Estado</div>
+        <div>Último Atendimento</div>
+        <div>Próximo Atendimento</div>
+      </div>
 
-    <button>
-      <Link  to='/formulario'>Novo paciente</Link>
-    </button>
-
-    <label htmlFor="text">Pesquisar paciente</label>
-    <input type="text" onChange={(e) => Pesquisar(e.target.value)}/>
-
-    <div className="titulo_tabela" >
-      <h2>Imagem</h2>
-      <h2>Nome</h2>
-      <h2>Telefone</h2>
-      <h2>Cidade</h2>
-      <h2>Estado</h2>
-      <h2>Ultimo Atendimento</h2>
-      <h2>Proximo Atendimento</h2>
-      
-
+      <div className="lista-pacientes">
+        {pacientesFiltrados && pacientesFiltrados.length > 0 ? (
+          pacientesFiltrados.map((paciente) => (
+            <Paciente
+              key={paciente.id}
+              paciente={paciente}
+              className="paciente"
+            />
+          ))
+        ) : (
+          <div className="empty-state">
+            <p>Nenhum paciente encontrado</p>
+            <Link to="/formulario" className="btn-novo-paciente">
+              Cadastrar Primeiro Paciente
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
+  );
+};
 
-    <div className='lista-pacientes'>
-      {pacientes.map(paciente => (
-        <Paciente key={paciente.id} paciente={paciente} className="paciente"/>
-      ))}
-    </div>
-
-  </div>
-  )
-}
-
-
-export default ListaPacientes
+export default ListaPacientes;
